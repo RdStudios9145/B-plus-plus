@@ -27,6 +27,7 @@ typedef enum _InstRequirements InstRequirements;
 class Compiler {
 public:
 	Compiler();
+	Compiler(ProgramStack* stack);
 	CompilerStatus start(TokenList* tokens);
 	CompilerStatus manage_instruction();
 	CompilerStatus manage_number(Token* token);

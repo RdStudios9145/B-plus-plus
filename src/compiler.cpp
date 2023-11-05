@@ -6,6 +6,12 @@ Compiler::Compiler() {
 	this->m_Stack = new ProgramStack();
 }
 
+Compiler::Compiler(ProgramStack* stack) {
+	this->m_Current_Inst = nullptr;
+	this->m_Reqs = (InstRequirements*) malloc(sizeof(InstRequirements));
+	this->m_Stack = stack;
+}
+
 CompilerStatus Compiler::start(TokenList* tokens) {
 	int i = 0;
 
@@ -72,6 +78,11 @@ CompilerStatus Compiler::manage_instruction() {
 			printf("Program printed: %i\n", num[1] / num[0]);
 			break;
 		case PRINT:
+			if (this->m_Stack->size() == 0) {
+				printf("WARNING: Stack is empty, nothing to print\n");
+				return COMPILER_SUCCESS;
+			}
+
 			for (int i = 0; i < this->m_Stack->size(); i++) {
 				printf("Program printed stack (%i): %i\n", i, this->m_Stack->get_data().at(i));
 			}
